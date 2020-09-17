@@ -1,0 +1,101 @@
+{
+	"_version": "1.12.0",
+	"sap.app": {
+		"id": "HelloJBNamespace.HelloJB",
+		"type": "application",
+		"i18n": "i18n/i18n.properties",
+		"applicationVersion": {
+			"version": "1.0.0"
+		},
+		"title": "{{appTitle}}",
+		"description": "{{appDescription}}",
+		"resources": "resources.json",
+		"ach": "ach",
+		"sourceTemplate": {
+			"id": "html5moduletemplates.basicSAPUI5ApplicationProjectModule",
+			"version": "1.40.12"
+		}
+	},
+	
+	"sap.cloud": {
+		"public": true,
+		"service": "HelloJBService"
+	},
+	
+	"sap.ui": {
+		"technology": "UI5",
+		"icons": {
+			"icon": "",
+			"favIcon": "",
+			"phone": "",
+			"phone@2": "",
+			"tablet": "",
+			"tablet@2": ""
+		},
+		"deviceTypes": {
+			"desktop": true,
+			"tablet": true,
+			"phone": true
+		}
+	},
+
+	"sap.ui5": {
+		"flexEnabled": false,
+		"rootView": {
+			"viewName": "HelloJBNamespace.HelloJB.view.HelloJBView",
+			"type": "XML",
+			"async": true,
+			"id": "HelloJBView"
+		},
+		"dependencies": {
+			"minUI5Version": "1.60.1",
+			"libs": {
+				"sap.ui.core": {},
+				"sap.m": {},
+				"sap.ui.layout": {}
+			}
+		},
+		"contentDensities": {
+			"compact": true,
+			"cozy": true
+		},
+		"models": {
+			"i18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"settings": {
+					"bundleName": "HelloJBNamespace.HelloJB.i18n.i18n"
+				}
+			}
+		},
+		"resources": {
+			"css": [{
+				"uri": "css/style.css"
+			}]
+		},
+		"routing": {
+			"config": {
+				"routerClass": "sap.m.routing.Router",
+				"viewType": "XML",
+				"async": true,
+				"viewPath": "HelloJBNamespace.HelloJB.view",
+				"controlAggregation": "pages",
+				"controlId": "app",
+				"clearControlAggregation": false
+			},
+			"routes": [{
+				"name": "RouteHelloJBView",
+				"pattern": "RouteHelloJBView",
+				"target": ["TargetHelloJBView"]
+			}],
+			"targets": {
+				"TargetHelloJBView": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearControlAggregation": false,
+					"viewId": "HelloJBView",
+					"viewName": "HelloJBView"
+				}
+			}
+		}
+	}
+}

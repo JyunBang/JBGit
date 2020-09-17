@@ -1,0 +1,81 @@
+_schema-version: "3.2"
+ID: HelloJB
+version: 0.0.1
+modules:
+- name: HelloJB-destination-content
+  type: com.sap.application.content
+  requires:
+  - name: uaa_HelloJB
+    parameters:
+      service-key:
+        name: uaa_HelloJB-key
+  - name: HelloJB_html_repo_host
+    parameters:
+      service-key:
+        name: HelloJB_html_repo_host-key
+  - name: HelloJB-destination-service
+    parameters:
+      content-target: true
+  parameters:
+    content:
+      subaccount:
+        destinations:
+        - Name: HelloJBService_HelloJB_html_repo_host
+          ServiceInstanceName: HelloJB-html5-app-host-service
+          ServiceKeyName: HelloJB_html_repo_host-key
+          sap.cloud.service: HelloJBService
+        - Authentication: OAuth2UserTokenExchange
+          Name: HelloJBService_uaa_HelloJB
+          ServiceInstanceName: HelloJB-xsuaa-service
+          ServiceKeyName: uaa_HelloJB-key
+          sap.cloud.service: HelloJBService
+        existing_destinations_policy: update
+  build-parameters:
+    no-source: true
+- name: HelloJB_ui_deployer
+  type: com.sap.application.content
+  path: .
+  requires:
+  - name: HelloJB_html_repo_host
+    parameters:
+      content-target: true
+  build-parameters:
+    build-result: resources
+    requires:
+    - artifacts:
+      - HelloJB-content.zip
+      name: HelloJB
+      target-path: resources/
+- name: HelloJB
+  type: html5
+  path: HelloJB
+  build-parameters:
+    builder: custom
+    commands:
+    - npm run build
+    supported-platforms: []
+resources:
+- name: HelloJB-destination-service
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: destination
+    service-name: HelloJB-destination-service
+    service-plan: lite
+- name: HelloJB_html_repo_host
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-name: HelloJB-html5-app-host-service
+    service-plan: app-host
+- name: uaa_HelloJB
+  type: org.cloudfoundry.managed-service
+  parameters:
+    path: ./xs-security.json
+    service: xsuaa
+    service-name: HelloJB-xsuaa-service
+    service-plan: application
+build-parameters:
+  before-all:
+  - builder: custom
+    commands:
+    - npm install
