@@ -1,9 +1,11 @@
-<mvc:View controllerName="saptw.JBGitHtml5Module.controller.View1" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m">
+<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" controllerName="saptw.JBGitHtml5Module.controller.View1" displayBlock="true">
 	<Shell id="shell">
 		<App id="app">
 			<pages>
 				<Page id="page" title="{i18n>title}">
-					<content></content>
+					<content>
+					    <Button xmlns="sap.m" text="Button1" id="button0"/>
+					</content>
 				</Page>
 			</pages>
 		</App>
